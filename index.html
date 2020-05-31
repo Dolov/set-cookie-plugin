@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+</head>
+<link rel="stylesheet" type="text/css" href="css/unite.css" >
+<link rel="stylesheet" type="text/css" href="lib/elemui/style.css" >
+<link rel="stylesheet" type="text/css" href="css/style.css" >
+<style>
+  
+</style>
+<body>
+  <div id="app">
+    <img class="bg-img" src="./img/web_developer.png" />
+    <main>
+      <div id="feTag" class="tags-container">
+        <p><i class="el-icon-user type-icon"> feTag</i></p>
+        <el-radio-group v-model="feTag" size="mini">
+          <el-radio-button v-for="tag in feTags" :key="tag" :label="tag">
+            {{tag}} <i v-if="tag !== 'NOTAG'" class="el-icon-close" @click.prevent="handleDelete('feTag', tag)"></i>
+          </el-radio-button>
+        </el-radio-group>
+        <i class="el-icon-circle-plus add-icon" @click="handleShow('feTag')"></i>
+      </div>
+      <div id="userTag" class="tags-container">
+        <p><i class="el-icon-user-solid type-icon"> userTag</i></p>
+        <el-radio-group v-model="userTag" size="mini">
+          <el-radio-button v-for="tag in userTags" :key="tag" :label="tag">
+            {{tag}} <i v-if="tag !== 'NOTAG'" class="el-icon-close" @click.prevent="handleDelete('userTag', tag)"></i>
+          </el-radio-button>
+        </el-radio-group>
+        <i class="el-icon-circle-plus add-icon" @click="handleShow('userTag')"></i>
+      </div>
+      <div
+        class="add-container" 
+        v-show="addInputVisible"
+      >
+        <el-input
+          ref="addTagInput"
+          autofocus="true"
+          size="mini"
+          v-model="newTag"
+          :placeholder="'请输入新的 '+ addTagType"
+          v-on:keyup.native.13="handleAdd"
+        >
+        </el-input>
+        <div class="handle-bar">
+          <el-button type="primary" size="mini" icon="el-icon-close" circle @click="handleCancel"></el-button>
+          <el-button type="primary" size="mini" icon="el-icon-check" circle @click="handleAdd"></el-button>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <button class="bttn-unite bttn-md bttn-primary" @click="clickpaas">clickpaas</button>
+      <!-- <el-button class="unite" type="primary" plain @click="clickpaas">clickpaas</el-button> -->
+    </footer>
+  </div>
+</body>
+</html>
+
+<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript" src="lib/elemui/index.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/index.js"></script>

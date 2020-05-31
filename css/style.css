@@ -1,0 +1,55 @@
+#app {
+    width: 500px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    position: relative;
+    z-index: 10;
+}
+
+#app main .type-icon {
+    font-size: 22px;
+    color: #409EFF;
+}
+
+.add-icon {
+    color: #99a9bf;
+    cursor: pointer;
+    transform: translateY(3px);
+    font-size: 16px;
+    display: none;
+}
+
+.add-container {
+    margin-top: 16px;
+    display: flex;
+}
+
+.tags-container:hover .add-icon {
+    display: inline-block;
+}
+
+.add-icon:hover {
+    color: #409EFF;
+}
+
+.handle-bar {
+    margin-left: 24px;
+    display: flex;
+}
+
+.bttn-unite {
+    outline: none;
+}
+
+.bg-img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    opacity: 0.1;
+}
