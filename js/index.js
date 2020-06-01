@@ -22,6 +22,17 @@ const app = new Vue({
       handleCancel() {
         this.addInputVisible = false
       },
+      handleTagTabsEdit(targetName, action, tagType) {
+        if (action === 'add') {
+          this.handleShow(tagType)
+          return
+        }
+        if (action === 'remove') {
+          this.handleDelete(tagType, targetName)
+          return
+        }
+        
+      },
       // 删除某个 Tag
       handleDelete(tagType, tagName) {
         sendMessageToContentScript({
@@ -88,8 +99,14 @@ const app = new Vue({
         }, response => {
           if (!response) return
           const { feTags, userTags } = response
-          this.feTags = [...new Set(feTags)]
-          this.userTags = [...new Set(userTags)]
+          this.feTags = [...new Set(feTags)].map(tagName => ({
+            name: tagName,
+            title: tagName,
+          }))
+          this.userTags = [...new Set(userTags)].map(tagName => ({
+            name: tagName,
+            title: tagName,
+          }))
         })
       }
     },

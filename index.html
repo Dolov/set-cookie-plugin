@@ -15,21 +15,43 @@
     <main>
       <div id="feTag" class="tags-container">
         <p><i class="el-icon-user type-icon"> feTag</i></p>
-        <el-radio-group v-model="feTag" size="mini">
+        <!-- <el-radio-group v-model="feTag" size="mini">
           <el-radio-button v-for="tag in feTags" :key="tag" :label="tag">
             {{tag}} <i v-if="tag !== 'NOTAG'" class="el-icon-close" @click.prevent="handleDelete('feTag', tag)"></i>
           </el-radio-button>
         </el-radio-group>
-        <i class="el-icon-circle-plus add-icon" @click="handleShow('feTag')"></i>
+        <i class="el-icon-circle-plus add-icon" @click="handleShow('feTag')"></i> -->
+        <el-tabs v-model="feTag" type="card" addable @edit="(targetName, action) => handleTagTabsEdit(targetName, action, 'feTag')">
+          <el-tab-pane
+            v-for="(item, index) in feTags"
+            :key="item.name"
+            :label="item.title"
+            :name="item.name"
+            :closable="item.name !== 'NOTAG'"
+          >
+            {{item.content}}
+          </el-tab-pane>
+        </el-tabs>
       </div>
       <div id="userTag" class="tags-container">
         <p><i class="el-icon-user-solid type-icon"> userTag</i></p>
-        <el-radio-group v-model="userTag" size="mini">
+        <!-- <el-radio-group v-model="userTag" size="mini">
           <el-radio-button v-for="tag in userTags" :key="tag" :label="tag">
             {{tag}} <i v-if="tag !== 'NOTAG'" class="el-icon-close" @click.prevent="handleDelete('userTag', tag)"></i>
           </el-radio-button>
         </el-radio-group>
-        <i class="el-icon-circle-plus add-icon" @click="handleShow('userTag')"></i>
+        <i class="el-icon-circle-plus add-icon" @click="handleShow('userTag')"></i> -->
+        <el-tabs v-model="userTag" type="card" addable @edit="(targetName, action) => handleTagTabsEdit(targetName, action, 'userTag')">
+          <el-tab-pane
+            v-for="(item, index) in userTags"
+            :key="item.name"
+            :label="item.title"
+            :name="item.name"
+            :closable="item.name !== 'NOTAG'"
+          >
+            {{item.content}}
+          </el-tab-pane>
+        </el-tabs>
       </div>
       <div
         class="add-container" 
