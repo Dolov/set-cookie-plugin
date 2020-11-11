@@ -36,33 +36,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 const getContentPageCookies = () => {
     const feTag = getCookie('feTag')
     const userTag = getCookie('userTag')
+    const webTag = getCookie('webTag')
     return {
         feTag,
         userTag,
+        webTag,
     }
 }
 
 // 设置页面的 tag 至页面
 const setContentPageCookies = cookies => {
-    const { feTag, userTag } = cookies
+    const { feTag, userTag, webTag } = cookies
     setCookie('feTag', feTag)
     setCookie('userTag', userTag)
+    setCookie('webTag', webTag)
 }
 
 // 从本地存储中读取 tag 列表
 const getTagListFromStorage = () => {
     const feTags = JSON.parse(localStorage.getItem('feTags')) || ['NOTAG']
     const userTags = JSON.parse(localStorage.getItem('userTags')) || ['NOTAG']
+    const webTags = JSON.parse(localStorage.getItem('webTags')) || ['NOTAG']
     return {
         feTags,
-        userTags
+        userTags,
+        webTags,
     }
 }
 
 // 添加某个类型的 tag
 const addTagToStorage = payload => {
     const { tagType, tagName } = payload
-    const { feTags = [], userTags = [] } = getTagListFromStorage()
+    const { feTags = [], userTags = [], webTags = [] } = getTagListFromStorage()
     if (tagType === 'feTag') {
         feTags.push(tagName)
         localStorage.setItem('feTags', JSON.stringify(feTags))
@@ -72,15 +77,18 @@ const addTagToStorage = payload => {
         userTags.push(tagName)
         localStorage.setItem('userTags', JSON.stringify(userTags))
     }
+    if (tagType === 'webTag') {
+        webTags.push(tagName)
+        localStorage.setItem('webTags', JSON.stringify(webTags))
+    }
 }
 
 // 删除某类型个 tag
 const deleteTag = payload => {
     const { tagType, tagName } = payload
-    const { feTags = [], userTags = [] } = getTagListFromStorage()
+    const { feTags = [], userTags = [], webTags = [] } = getTagListFromStorage()
     if (tagType === 'feTag') {
         const index = feTags.indexOf(tagName)
-        console.log('index: ', index);
         if (index === -1) return
         feTags.splice(index, 1)
         localStorage.setItem('feTags', JSON.stringify(feTags))
@@ -91,6 +99,12 @@ const deleteTag = payload => {
         if (index === -1) return
         userTags.splice(index, 1)
         localStorage.setItem('userTags', JSON.stringify(userTags))
+    }
+    if (tagType === 'webTag') {
+        const index = webTags.indexOf(tagName)
+        if (index === -1) return
+        webTags.splice(index, 1)
+        localStorage.setItem('webTags', JSON.stringify(webTags))
     }
 }
 
@@ -113,9 +127,9 @@ function getCookie(name)
 {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
  
-    if(arr=document.cookie.match(reg))
- 
+    if(arr=document.cookie.match(reg)) {
+        console.log('arr: ', arr);
         return unescape(arr[2]);
-    else
-        return null;
+    }
+    return null;
 }

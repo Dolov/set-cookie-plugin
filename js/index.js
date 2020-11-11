@@ -3,9 +3,11 @@ const app = new Vue({
     data: {
       newTag: '',
       feTag: null,
+      webTag: null,
       userTag: null,
       addTagType: null,
       feTags: [],
+      webTags: [],
       userTags: [],
       addInputVisible: false,
     },
@@ -53,6 +55,7 @@ const app = new Vue({
         if (!this.newTag) return
         if (this.addTagType === 'feTag' && this.feTags.includes(this.newTag)) return
         if (this.addTagType === 'userTag' && this.userTags.includes(this.newTag)) return
+        if (this.addTagType === 'webTag' && this.webTags.includes(this.newTag)) return
         sendMessageToContentScript({
           type: 'addTag',
           payload: {
@@ -73,6 +76,7 @@ const app = new Vue({
           payload: {
             feTag: this.feTag,
             userTag: this.userTag,
+            webTag: this.webTag,
           }
         }, (response) => {
           if (!response) return
@@ -87,9 +91,10 @@ const app = new Vue({
             document.body.innerHTML = '<p style="white-space: nowrap;">clickpaas, click your dream!!!</p>'
             return
           }
-          const { feTag, userTag } = cookies
+          const { feTag, userTag, webTag } = cookies
           this.feTag = feTag || 'NOTAG'
           this.userTag = userTag || 'NOTAG'
+          this.webTag = webTag || 'NOTAG'
         })
       },
       // 从本地存储中读取 Tag 列表
@@ -98,12 +103,16 @@ const app = new Vue({
           type: 'getTagList',
         }, response => {
           if (!response) return
-          const { feTags, userTags } = response
+          const { feTags, userTags, webTags } = response
           this.feTags = [...new Set(feTags)].map(tagName => ({
             name: tagName,
             title: tagName,
           }))
           this.userTags = [...new Set(userTags)].map(tagName => ({
+            name: tagName,
+            title: tagName,
+          }))
+          this.webTags = [...new Set(webTags)].map(tagName => ({
             name: tagName,
             title: tagName,
           }))

@@ -2,7 +2,7 @@
     "manifest_version":2,
     "name":"cookie",
     "description":"clickpaas cookie set",
-    "version":"1.0",
+    "version":"1.9",
     "permissions": [
     ],
     "browser_action": {
